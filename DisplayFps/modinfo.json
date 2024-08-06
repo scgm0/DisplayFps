@@ -1,0 +1,14 @@
+{
+    "type": "code",
+    "modid": "displayfps",
+    "name": "帧率显示",
+    "side": "client",
+    "authors": [
+        "神麤詭末"
+    ],
+    "description": "显示游戏帧率",
+    "version": "1.0.0",
+    "dependencies": {
+        "game": ""
+    }
+}

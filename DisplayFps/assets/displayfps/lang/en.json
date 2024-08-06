@@ -1,0 +1,15 @@
+{
+    "displayfps:displayfps_setting": "DisplayFps Setting",
+    "displayfps:Config.Setting.FontName": "Font Name",
+    "displayfps:Config.Setting.FontWeight": "Font Weight",
+    "displayfps:Config.Setting.FontSize": "Font Size",
+    "displayfps:Config.Setting.Alignment": "Alignment",
+    "displayfps:Config.Setting.Interval": "Interval",
+    "displayfps:Config.Setting.Offset": "Offset",
+    "displayfps:Config.Setting.FpsType": "Fps Type",
+    "displayfps:Config.Setting.FpsType.RealTime": "Real Time",
+    "displayfps:Config.Setting.FpsType.Average": "Average",
+    "displayfps:Config.Setting.Detailed": "Detailed",
+    "displayfps:Config.Setting.RealTime": "Average: {0}  Max: {1}  Min: {2}",
+    "displayfps:Config.Setting.Average": "RealTime: {0}  Max: {1}  Min: {2}"
+}
