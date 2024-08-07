@@ -9,28 +9,29 @@ namespace DisplayFps;
 
 public class ConfigLibCompat {
 	private const string SettingPrefix = "displayfps:Config.Setting.";
-	private ICoreAPI _api;
-	private FpsText _fpsText;
+	private readonly FpsText _fpsText;
 
 	public ConfigLibCompat(ICoreAPI api, FpsText fpsText) {
-		_api = api;
 		_fpsText = fpsText;
 		api.ModLoader.GetModSystem<ConfigLibModSystem>().RegisterCustomConfig(Lang.Get("displayfps:displayfps_setting"),
 			(id, buttons) => EditConfigClient(id, buttons, api));
 	}
 
-	private void EditConfigClient(string id, ConfigLib.ControlButtons buttons, ICoreAPI api) {
+	private void EditConfigClient(string id, ControlButtons buttons, ICoreAPI api) {
+		
 		if (buttons.Save) api.StoreModConfig(_fpsText.Config, "DisplayFps.json");
 		if (buttons.Restore) api.LoadModConfig<Config>("DisplayFps.json");
 		if (buttons.Defaults) _fpsText.Config = new();
-		_fpsText.Config.FontName = OnInputText(id, _fpsText.Config.FontName, nameof(_fpsText.Config.FontName));
-		_fpsText.Config.FontWeight = OnInputEnum(id, _fpsText.Config.FontWeight, nameof(_fpsText.Config.FontWeight));
-		_fpsText.Config.FontSize = OnInputInt(id, _fpsText.Config.FontSize, nameof(_fpsText.Config.FontSize));
-		_fpsText.Config.Alignment = OnInputEnum(id, _fpsText.Config.Alignment, nameof(_fpsText.Config.Alignment));
-		_fpsText.Config.Interval = OnInputDouble(id, _fpsText.Config.Interval, nameof(_fpsText.Config.Interval));
-		_fpsText.Config.FpsType = OnInputEnum(id, _fpsText.Config.FpsType, nameof(_fpsText.Config.FpsType));
-		_fpsText.Config.Detailed = OnInputBool(id, _fpsText.Config.Detailed, nameof(_fpsText.Config.Detailed));
-		OnInputVec2i(id, _fpsText.Config.Offset, nameof(_fpsText.Config.Offset));
+		var config = _fpsText.Config;
+		config.FontName = OnInputText(id, config.FontName, nameof(config.FontName));
+		config.FontWeight = OnInputEnum(id, config.FontWeight, nameof(config.FontWeight));
+		config.FontSize = OnInputInt(id, config.FontSize, nameof(config.FontSize));
+		config.Alignment = OnInputEnum(id, config.Alignment, nameof(config.Alignment));
+		config.Interval = OnInputDouble(id, config.Interval, nameof(config.Interval));
+		config.FpsType = OnInputEnum(id, config.FpsType, nameof(config.FpsType));
+		config.Detailed = OnInputBool(id, config.Detailed, nameof(config.Detailed));
+		OnInputVec2i(id, config.Offset, nameof(config.Offset));
+		_fpsText.Config = config;
 		_fpsText.UpdateConfig();
 	}
 

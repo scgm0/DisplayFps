@@ -14,14 +14,19 @@ public sealed class FpsText : HudElement {
 	private double _maxTime;
 	private int _fps;
 	public Config Config { get; set; }
+	public override bool PrefersUngrabbedMouse => false;
+	public override bool Focusable => false;
+	public override bool Focused => false;
+	public override double DrawOrder => 0.5;
+
+	public override bool CaptureAllInputs() => false;
+	public override bool CaptureRawMouse() => false;
+	public override bool ShouldReceiveKeyboardEvents() => false;
+	public override bool ShouldReceiveMouseEvents() => false;
 
 	public FpsText(ICoreClientAPI api) : base(api) {
 		try {
 			Config = api.LoadModConfig<Config>("DisplayFps.json");
-			if (Config == null) {
-				Config = new();
-				api.StoreModConfig(Config, "DisplayFps.json");
-			}
 		} catch {
 			Config = new();
 			api.StoreModConfig(Config, "DisplayFps.json");

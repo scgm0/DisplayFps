@@ -7,7 +7,7 @@ using Vintagestory.Client.NoObf;
 
 namespace DisplayFps;
 
-public class Config {
+public struct Config() {
 	public string FontName { get; set; } = ClientSettings.DefaultFontName;
 
 	[JsonConverter(typeof(StringEnumConverter))]
