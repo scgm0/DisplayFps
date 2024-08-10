@@ -2,7 +2,6 @@ using System;
 using OpenTK.Windowing.Common;
 using Vintagestory.API.Client;
 using Vintagestory.API.Config;
-using Vintagestory.Server;
 
 namespace DisplayFps;
 
@@ -26,7 +25,7 @@ public sealed class FpsText : HudElement {
 
 	public FpsText(ICoreClientAPI api) : base(api) {
 		try {
-			Config = api.LoadModConfig<Config>("DisplayFps.json");
+			Config = api.LoadModConfig<Config?>("DisplayFps.json") ?? new();
 		} catch {
 			Config = new();
 			api.StoreModConfig(Config, "DisplayFps.json");

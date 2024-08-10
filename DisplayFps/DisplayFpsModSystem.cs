@@ -7,7 +7,7 @@ using Vintagestory.API.Common;
 namespace DisplayFps;
 
 public class DisplayFpsModSystem : ModSystem {
-	private FpsText? _fpsText = null;
+	private FpsText? _fpsText;
 	public override bool ShouldLoad(EnumAppSide forSide) { return forSide == EnumAppSide.Client; }
 
 	public override void StartClientSide(ICoreClientAPI api) {
