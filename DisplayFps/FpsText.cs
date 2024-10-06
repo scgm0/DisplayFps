@@ -28,8 +28,9 @@ public sealed class FpsText : HudElement {
 			Config = api.LoadModConfig<Config?>("DisplayFps.json") ?? new();
 		} catch {
 			Config = new();
-			api.StoreModConfig(Config, "DisplayFps.json");
 		}
+
+		api.StoreModConfig(Config, "DisplayFps.json");
 
 		var dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(Config.Alignment)
 			.WithFixedAlignmentOffset(Config.Offset.X, Config.Offset.Y).WithFixedPadding(10, 0);
@@ -61,6 +62,7 @@ public sealed class FpsText : HudElement {
 	}
 
 	public override void Dispose() {
+		SingleComposer.Api.StoreModConfig(Config, "DisplayFps.json");
 		capi.Forms.Window.RenderFrame -= UpdateFps;
 		TryClose();
 		base.Dispose();
@@ -90,13 +92,13 @@ public sealed class FpsText : HudElement {
 				case FpsType.RealTime: {
 					UpdateFps(
 						$"{(int)(1 / args.Time)} FPS{(Config.Detailed
-							? $"  ( {Lang.Get(SettingPrefix + "RealTime", (int)(1 / (_time / _fps)), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
+							? $"  ( {Lang.Get(SettingPrefix + "RealTime", (int)(1 / _time * _fps), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
 							: string.Empty)}");
 					break;
 				}
 				case FpsType.Average: {
 					UpdateFps(
-						$"{(int)(1 / (_time / _fps))} FPS{(Config.Detailed
+						$"{(int)(1 / _time * _fps)} FPS{(Config.Detailed
 							? $"  ( {Lang.Get(SettingPrefix + "Average", (int)(1 / args.Time), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
 							: string.Empty)}");
 					break;

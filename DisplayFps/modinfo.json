@@ -7,7 +7,7 @@
         "神麤詭末"
     ],
     "description": "显示游戏帧率",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "dependencies": {
         "game": ""
     }

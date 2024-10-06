@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 
 [assembly: ModInfo(name: "帧率显示", modID: "displayfps", Authors = ["神麤詭末"], Description = "显示游戏帧率", Side = "Client")]
 
