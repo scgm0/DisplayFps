@@ -1,5 +1,4 @@
 using System;
-using OpenTK.Windowing.Common;
 using Vintagestory.API.Client;
 using Vintagestory.API.Config;
 
@@ -48,7 +47,11 @@ public sealed class FpsText : HudElement {
 				"fps")
 			.Compose();
 		_text = SingleComposer.GetDynamicText("fps");
-		api.Forms.Window.RenderFrame += UpdateFps;
+	}
+
+	public override void OnFinalizeFrame(float dt) {
+		base.OnFinalizeFrame(dt);
+		UpdateFps(dt);
 	}
 
 	public void UpdateConfig() {
@@ -63,7 +66,6 @@ public sealed class FpsText : HudElement {
 
 	public override void Dispose() {
 		SingleComposer.Api.StoreModConfig(Config, "DisplayFps.json");
-		capi.Forms.Window.RenderFrame -= UpdateFps;
 		TryClose();
 		base.Dispose();
 	}
@@ -76,22 +78,22 @@ public sealed class FpsText : HudElement {
 		_text.RecomposeText(true);
 	}
 
-	public void UpdateFps(FrameEventArgs args) {
-		if (_time == 0 || args.Time < _minTime) {
-			_minTime = args.Time;
+	public void UpdateFps(float time) {
+		if (_time == 0 || time < _minTime) {
+			_minTime = time;
 		}
 
-		if (_time == 0 || args.Time > _maxTime) {
-			_maxTime = args.Time;
+		if (_time == 0 || time > _maxTime) {
+			_maxTime = time;
 		}
 
-		_time += args.Time;
+		_time += time;
 
 		if (_time >= Config.Interval) {
 			switch (Config.FpsType) {
 				case FpsType.RealTime: {
 					UpdateFps(
-						$"{(int)(1 / args.Time)} FPS{(Config.Detailed
+						$"{(int)(1 / time)} FPS{(Config.Detailed
 							? $"  ( {Lang.Get(SettingPrefix + "RealTime", (int)(1 / _time * _fps), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
 							: string.Empty)}");
 					break;
@@ -99,7 +101,7 @@ public sealed class FpsText : HudElement {
 				case FpsType.Average: {
 					UpdateFps(
 						$"{(int)(1 / _time * _fps)} FPS{(Config.Detailed
-							? $"  ( {Lang.Get(SettingPrefix + "Average", (int)(1 / args.Time), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
+							? $"  ( {Lang.Get(SettingPrefix + "Average", (int)(1 / time), (int)(1 / _minTime), (int)(1 / _maxTime))} )"
 							: string.Empty)}");
 					break;
 				}
